@@ -12,7 +12,12 @@ const {
   validateEmail,
   validateID,
 } = require("../helpers/db.validators");
-const { validateFields } = require("../middlewares/validate-fields");
+const {
+  validateFields,
+  validateJWT,
+  validateAdminRole,
+  validateOtherRole,
+} = require("../middlewares");
 
 const router = Router();
 
@@ -50,6 +55,9 @@ router.put(
 router.delete(
   "/:id",
   [
+    validateJWT,
+    // validateAdminRole,
+    validateOtherRole("ADMIN_ROLE", "SALES_ROLE"), // middleware con argumentos
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(validateID),
     validateFields,

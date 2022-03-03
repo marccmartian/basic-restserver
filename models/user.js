@@ -36,7 +36,8 @@ const UserSchema = Schema({
 // este metodo quita las propiedades '__v' (version) y 'password' de la respuesta del postUser (crear usuario)
 // el '...user' hace referencia a las propiedades del objeto actual (user)
 UserSchema.methods.toJSON = function () {
-  const { __v, password, ...user } = this.toObject(); // la propiedades --v y password las voy a quitar
+  const { __v, password, _id, ...user } = this.toObject(); // la propiedades --v y password las voy a quitar
+  user.uid = _id; // la respuesta tambien me trae _id se la cambio por uid
   return user; // aqui me quedo con todo el objeto menos las propiedad __v y password
 };
 
