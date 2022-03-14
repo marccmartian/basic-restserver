@@ -29,10 +29,24 @@ const validateProductId = async (id) => {
   if (!existsId) throw new Error(`El id: ${id} no existe`);
 };
 
+// validar colecciones permitidas para actualiar imagenes
+const allowedCollections = (collection = "", collections = []) => {
+  const isIncluded = collections.includes(collection);
+
+  if (!isIncluded) {
+    throw new Error(
+      `La colección ${collection} no es permitida, son permitidas: ${collections}`
+    );
+  }
+
+  return true;
+};
+
 module.exports = {
   validateRole,
   validateEmail,
   validateID,
   validateCategoryId,
   validateProductId,
+  allowedCollections,
 };
